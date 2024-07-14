@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>CONCRETE CLICK</title>
+</head>
+<body>
+    <h1>CLICK THE CONCRETE</h1>
+    <div id="concrete" onclick="handleClick()"></div>
+    <h3 id="clicksText">CONCRETE CLICKS: 0</h3>
+    <h3 id="coinsText">CONCRETE COINS: 0</h3>
+    <div id="upgrade" onclick="upgradeClicks()">
+      <h3 id="upgradeText">+1 CONCRETE COIN PER CLICK: 100</h3>
+    </div>
+
+    <script>
+
+        // Game variables
+        var clicks = 0;
+        var coins = 0;
+        var coinUpgrade = 1;
+        var price = 100;
+
+
+        // Update score on click
+        document.getElementById("concrete").addEventListener("click", function() {
+            clicks++;
+            document.getElementById("clicksText").textContent = "CONCRETE CLICKS: " + clicks;
+        });
+        document.getElementById("concrete").addEventListener("click", function() {
+            coins += coinUpgrade;
+            document.getElementById("coinsText").textContent = "CONCRETE COINS: " + coins;
+        });
+
+
+        // Sound on click
+        function playSoundB() {
+      var audioB = new Audio('concretesound1.mp3');
+      audioB.play();
+      audioB.onended = function() {
+        document.getElementById('concrete').disabled = false;
+      }
+    }
+    //Attach event listener to play sound on button click
+    document.getElementById('concrete').addEventListener('click', playSoundB);
+    //Enable the play button initially
+    window.onload = function() {
+      document.getElementById('concrete').style.display = 'concrete';
+    };
+
+
+     // Sound played every 100 clicks
+     var counter = 0; //Initialize the counter variable
+function playSoundA() {
+  var audioA = new Audio('concretesound100.mp3'); //Replace with the path to your sound file
+  audioA.play();
+};
+function handleClick() {
+  counter++; //Increment the score by 1
+  if (counter % 100 === 0) {
+    playSoundA(); //Play the sound every 100 clicks
+  }
+};
+
+
+// Upgrade points per click
+function upgradeClicks() {
+  if (coins == price) {
+    coins -= price;
+    coinsText.innerHTML = "CONCRETE COINS: " + coins;
+    coinUpgrade += 1;
+    var audioC = new Audio('concretecoinsound.mp3');
+    audioC.play();
+    price = Math.round(price * 1.2 + 100); //Assign the new value to "price"
+    document.getElementById("upgradeText").innerHTML = "+1 CONCRETE COIN PER CLICK: " + price; //Update the price in the <h3> element
+  }
+  
+  if (coins >= price) {
+    coins -= price;
+    coinsText.innerHTML = "CONCRETE COINS: " + coins;
+    coinUpgrade += 1;
+    var audioC = new Audio('concretecoinsound.mp3');
+    audioC.play();
+    price = Math.round(price * 1.2 + 100); //Assign the new value to "price"
+    document.getElementById("upgradeText").innerHTML = "+1 CONCRETE COIN PER CLICK: " + price; //Update the price in the <h3> element
+  }
+};
+
+    </script>
+</body>
+</html>
